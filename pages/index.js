@@ -27,17 +27,68 @@ function PropileSideBar(props) {
 export default function Home() {
   const GitHubUsers = 'omariosouto';
   const peopleFav= [
-    'omariosouto' ,
-    'peas' ,
-    'juunegreiros' ,
-    'marcobrunodev' ,
-    'felipefialho',
+    {
+      id: '0',
+      name: 'omariosouto',
+    },
+    
+    {
+      id: '1',
+      name: 'peas'
+    },
+
+    { 
+      id: '2',
+      name: 'juunegreiros' ,
+    },
+    
+    {
+      id: '3',
+      name: 'marcobrunodev' ,
+    },
+    
+    {
+      id: '4',
+      name: 'omariosouto',
+    },
+
+    {
+      id: '5',
+      name: 'felipefialho',
+    },
+
+    {
+      id: '6',
+      name: 'juunegreiros',
+    },
+
+    {
+      id: '7',
+      name: 'juunegreiros',
+    },
+
+    {
+      id: '8',
+      name: 'juunegreiros',
+    },
+    {
+      id: '9',
+      name: 'juunegreiros',
+    },
+
+  
   ]
-  const [community , setcommunity] = useState([{
-    id: '1',
-    title: 'Alurakut',
-    image: "https://picsum.photos/200",
-  }]);
+  const [community , setcommunity] = useState(
+    [
+      {
+        id: 1,
+        title: 'Alurakut',
+        image: "https://picsum.photos/200/300?random=1",
+      },
+    ]
+  );
+
+  console.log(community);
   
   
   return (
@@ -62,17 +113,13 @@ export default function Home() {
                 const diceForm = new FormData(e.target);
                 
                 const communityDice = {
-                  id: new Date().toISOString,
+                  id: (community.length + 1),
                   title: diceForm.get('title'),
                   image: diceForm.get('image'),
                 }
                 let communityNew = [...community , communityDice]
-
-                if(communityNew.length > 6 ){
-                  alert('Limite Máximo atingindo')
-                }else{
-                  setcommunity(communityNew);
-                } 
+                setcommunity(communityNew);
+               
             }}>
               
               <div style={{marginTop:10}}>
@@ -108,7 +155,7 @@ export default function Home() {
 
             <ul>
                 {
-                  community.map((val) => {
+                  community.filter(community => community.id <= 6).map((val) => {
                   return (
                     <li key={val.id}>
                       <a href={`/users/${val.title}`}>
@@ -129,18 +176,16 @@ export default function Home() {
 
               <ul>
                 {
-                  
-                  peopleFav.map((val) => {
+                  peopleFav.filter(peopleFav => peopleFav.id < "6" ).map(function(val){
                       return(
                           <li key={val}>
-                            <a href={`/users/${val}`}>
-                              <img src={`https://github.com/${val}.png`} />
-                              <span>{val}</span>
+                            <a href={`/users/${val.name}`}>
+                              <img src={`https://github.com/${val.name}.png`} />
+                              <span>{val.name}</span>
                             </a>
                           </li>
                         )
                       })
-                
                 }
               </ul>
             </ProfileRelationsBoxWrapper>
