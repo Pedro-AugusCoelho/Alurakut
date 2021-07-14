@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import MainGrid from "../src/componentes/MainGrid";
 import Box from "../src/componentes/Box";
 import {AlurakutMenu , AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
@@ -83,13 +83,21 @@ export default function Home() {
       {
         id: 1,
         title: 'Alurakut',
-        image: "https://picsum.photos/200/300?random=1",
+        image: "https://avatars.githubusercontent.com/u/37260?v=4",
       },
     ]
   );
 
-  console.log(community);
+  const [ follows , setfollows ] = useState([]);
   
+  useEffect(function(){
+      fetch('https://api.github.com/users/omariosouto/followers').then(function(response){
+        return response.json();
+      }).then(function(responseTwo){
+        setfollows(responseTwo);
+        console.log(responseTwo);
+      })
+  },[]);
   
   return (
       <>
@@ -133,9 +141,9 @@ export default function Home() {
 
               <div>
                   <input 
-                        placeholder='Coloque uma URL para usarmos de capa' 
+                        placeholder='Coloque a URL para imagem '
                         name='image' 
-                        aria-label='Qual vai ser o nome da sua comunidade ?'
+                        aria-label='Coloque uma URL para usarmos de capa'
                         type='text'
                   />
               </div>
@@ -152,6 +160,31 @@ export default function Home() {
         
         <div className='profileRelationsArea' style={{ gridArea:'profileRelationsArea '}}>
         <ProfileRelationsBoxWrapper>
+              <h2 className="smallTitle">
+                Seguidores ({follows.length})
+              </h2>
+
+              <ul>
+                {
+                  follows.map(function(val , i){
+                      return(
+                          <li key={val}>
+                            <a href={`/users/${val}`}>
+                              <img src={val.avatar_url}/>
+                              <span>{val.login}</span>
+                              <span>{i}</span>
+                            </a>
+                          </li>
+                        )
+                      })
+                }
+              </ul>
+        </ProfileRelationsBoxWrapper>
+        
+        <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+                    Comunidades ({community.length})
+            </h2>
 
             <ul>
                 {
