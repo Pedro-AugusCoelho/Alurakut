@@ -78,26 +78,43 @@ export default function Home() {
 
   
   ]
-  const [community , setcommunity] = useState(
-    [
-      {
-        id: 1,
-        title: 'Alurakut',
-        image: "https://avatars.githubusercontent.com/u/37260?v=4",
-      },
-    ]
-  );
+  const [community , setcommunity] = useState([]);
 
   const [ follows , setfollows ] = useState([]);
   
   useEffect(function(){
-      fetch('https://api.github.com/users/omariosouto/followers').then(function(response){
+      
+    fetch('https://api.github.com/users/omariosouto/followers').then(function(response){
         return response.json();
       }).then(function(responseTwo){
         setfollows(responseTwo);
-        console.log(responseTwo);
-      })
+    });
   },[]);
+
+  useEffect(function(){
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '5a9cb0706db64f945769c1df73d9cc',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ "query": `query {
+        allCommunities {
+          id 
+          title
+          imageUrl
+          creatorSlug
+        }
+      }` })
+    })
+    .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+    .then((responseComplet) => {
+     const communitysDato = responseComplet.data.allCommunities;
+     setcommunity(communitysDato);
+    })
+  
+  }, []);
   
   return (
       <>
@@ -121,12 +138,23 @@ export default function Home() {
                 const diceForm = new FormData(e.target);
                 
                 const communityDice = {
-                  id: new Date().getDate      ,
                   title: diceForm.get('title'),
-                  image: diceForm.get('image'),
+                  imageUrl: diceForm.get('image'),
+                  creatorSlug: GitHubUsers,
                 }
-                let communityNew = [...community , communityDice]
-                setcommunity(communityNew);
+
+                fetch('/api/community', {
+                  method:'POST',
+                  headers:{
+                    'Content-Type' : 'application/json',
+                  },
+                  body: JSON.stringify(communityDice)
+                }).then(async (response) => {
+                  const dados = await response.json()
+                  console.log(dados.RegistroCriado);
+                  const communityCriado = dados.RegistroCriado
+                  setcommunity({...community , communityCriado });
+                })
                
             }}>
               
@@ -190,8 +218,8 @@ export default function Home() {
                   community.slice(0 , 6).map((val) => {
                   return (
                     <li key={val.id}>
-                      <a href={`/users/${val.title}`}>
-                        <img src={val.image}/>
+                      <a href={`/community/${val.id}`}>
+                        <img src={val.imageUrl}/>
                         <span>{val.title}</span>
                       </a>
                     </li>
