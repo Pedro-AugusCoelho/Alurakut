@@ -3,6 +3,8 @@ import MainGrid from "../src/componentes/MainGrid";
 import Box from "../src/componentes/Box";
 import {AlurakutMenu , AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import {ProfileRelationsBoxWrapper} from '../src/componentes/ProfileRelationsBoxWrapper';
+import AreaNews from './AreaNews';
+
 
 
 
@@ -26,58 +28,7 @@ function PropileSideBar(props) {
 
 export default function Home() {
   const GitHubUsers = 'omariosouto';
-  const peopleFav= [
-    {
-      id: '0',
-      name: 'omariosouto',
-    },
-    
-    {
-      id: '1',
-      name: 'peas'
-    },
-
-    { 
-      id: '2',
-      name: 'juunegreiros' ,
-    },
-    
-    {
-      id: '3',
-      name: 'marcobrunodev' ,
-    },
-    
-    {
-      id: '4',
-      name: 'omariosouto',
-    },
-
-    {
-      id: '5',
-      name: 'felipefialho',
-    },
-
-    {
-      id: '6',
-      name: 'juunegreiros',
-    },
-
-    {
-      id: '7',
-      name: 'juunegreiros',
-    },
-
-    {
-      id: '8',
-      name: 'juunegreiros',
-    },
-    {
-      id: '9',
-      name: 'juunegreiros',
-    },
-
-  
-  ]
+  const [peopleFav , setPeopleFav] = useState([]);
   const [community , setcommunity] = useState([]);
 
   const [ follows , setfollows ] = useState([]);
@@ -92,6 +43,7 @@ export default function Home() {
   },[]);
 
   useEffect(function(){
+    //Pegar do DATO AS INFORMAÇÕES SOBRE Community
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
       headers: {
@@ -112,6 +64,27 @@ export default function Home() {
     .then((responseComplet) => {
      const communitysDato = responseComplet.data.allCommunities;
      setcommunity(communitysDato);
+    })
+
+    //Pegar do DATO AS INFORMAÇÕES SOBRE Pessoas da comunidade
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '5a9cb0706db64f945769c1df73d9cc',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ "query": `query {
+        allPeoplefavs{
+          id
+          name
+        }
+      }` })
+    })
+    .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+    .then((responseComplet) => {
+     const communitysPeopleFavDato = responseComplet.data.allPeoplefavs;
+     setPeopleFav(communitysPeopleFavDato);
     })
   
   }, []);
@@ -180,10 +153,10 @@ export default function Home() {
                 Criar comunidade
               </button>
             </form>
-            
-            
-            
             </Box>
+           
+            <AreaNews GitHubUser={GitHubUsers}></AreaNews>
+        
         </div>
         
         <div className='profileRelationsArea' style={{ gridArea:'profileRelationsArea '}}>
@@ -238,7 +211,7 @@ export default function Home() {
                 {
                   peopleFav.slice(0 , 6).map(function(val){
                       return(
-                          <li key={val}>
+                          <li key={val.id}>
                             <a href={`/users/${val.name}`}>
                               <img src={`https://github.com/${val.name}.png`} />
                               <span>{val.name}</span>
