@@ -172,7 +172,6 @@ export default function Home() {
                             <a href={`/users/${val}`}>
                               <img src={val.avatar_url}/>
                               <span>{val.login}</span>
-                              <span>{i}</span>
                             </a>
                           </li>
                         )
