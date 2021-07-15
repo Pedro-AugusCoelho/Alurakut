@@ -121,7 +121,7 @@ export default function Home() {
                 const diceForm = new FormData(e.target);
                 
                 const communityDice = {
-                  id: (community.length + 1),
+                  id: new Date().getDate      ,
                   title: diceForm.get('title'),
                   image: diceForm.get('image'),
                 }
@@ -166,7 +166,7 @@ export default function Home() {
 
               <ul>
                 {
-                  follows.map(function(val , i){
+                  follows.slice(0 , 6).map(function(val){
                       return(
                           <li key={val}>
                             <a href={`/users/${val}`}>
@@ -188,7 +188,7 @@ export default function Home() {
 
             <ul>
                 {
-                  community.filter(community => community.id <= 6).map((val) => {
+                  community.slice(0 , 6).map((val) => {
                   return (
                     <li key={val.id}>
                       <a href={`/users/${val.title}`}>
@@ -209,7 +209,7 @@ export default function Home() {
 
               <ul>
                 {
-                  peopleFav.filter(peopleFav => peopleFav.id < "6" ).map(function(val){
+                  peopleFav.slice(0 , 6).map(function(val){
                       return(
                           <li key={val}>
                             <a href={`/users/${val.name}`}>
