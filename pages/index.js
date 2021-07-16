@@ -6,6 +6,7 @@ import Box from "../src/componentes/Box";
 import {AlurakutMenu , AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import {ProfileRelationsBoxWrapper} from '../src/componentes/ProfileRelationsBoxWrapper';
 import AreaNews from './AreaNews';
+import CreateNews from './CreateNews';
 
 
 
@@ -156,8 +157,12 @@ export default function Home(props) {
               </button>
             </form>
             </Box>
+
+            <CreateNews githubUser={GitHubUsers} />
+
+
            
-            <AreaNews GitHubUser={GitHubUsers}></AreaNews>
+            <AreaNews></AreaNews>
         
         </div>
         
@@ -190,7 +195,7 @@ export default function Home(props) {
 
             <ul>
                 {
-                  community.slice(0 , 6).map((val) => {
+                  community.slice(0,6).map((val) => {
                   return (
                     <li key={val.id}>
                       <a href={`/community/${val.id}`}>

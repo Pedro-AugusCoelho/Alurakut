@@ -6,7 +6,6 @@ import Box from '../src/componentes/Box';
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineMessage } from "react-icons/ai";
 import { AiOutlineShareAlt } from "react-icons/ai";
-import { format } from 'date-fns';
 
 
 
@@ -26,7 +25,6 @@ export default function AreaNews(props){
           text
           imageurl
           namecreate
-          date
         }
       }` })
     })
