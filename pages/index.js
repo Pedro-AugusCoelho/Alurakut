@@ -38,7 +38,7 @@ export default function Home(props) {
   
   useEffect(function(){
       
-    fetch('https://api.github.com/users/omariosouto/followers').then(function(response){
+    fetch(`https://api.github.com/users/${GitHubUsers}/followers`).then(function(response){
         return response.json();
       }).then(function(responseTwo){
         setfollows(responseTwo);
