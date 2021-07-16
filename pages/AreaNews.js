@@ -54,7 +54,7 @@ export default function AreaNews(props){
                         </div>
                         
                         <div className='feedHeaderContainer' style={{gridArea:'title'}}>
-                            <span>Mario Souto</span>
+                            <span>{val.namecreate}</span>
                             <p>35 Min</p>
                         </div>
 
