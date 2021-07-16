@@ -101,7 +101,7 @@ export default function Home(props) {
         
         <div className='welcomeArea' style={{ gridArea:'welcomeArea' }}>
             <Box>
-            <h1 className='title'>Bem Vindo(a)</h1>
+            <h1 className='title'>Bem Vindo(a), {props.githubUser}</h1>
             <OrkutNostalgicIconSet />
             </Box>
 
@@ -151,7 +151,7 @@ export default function Home(props) {
                   />
               </div>
 
-              <button>
+              <button style={{backgroundColor:'#75D30B'}}>
                 Criar comunidade
               </button>
             </form>
