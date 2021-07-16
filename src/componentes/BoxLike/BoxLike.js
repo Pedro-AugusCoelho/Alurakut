@@ -8,11 +8,18 @@ const BoxLike = styled.div`
   grid-gap: 10px;
   grid-template-areas: "containerLike containerComment containerShare";
   grid-template-columns: "33.3% 33.3% 33.3%";
+  align-items: center;
+
+
+  span{
+      font-size: 18px;
+      margin-left: 12px;
+  }
 
   .containerLike{
     width: '100%';
     background-color: #002f;
-    padding:10px 0;
+    padding:5px 0;
     border-radius: 20px;
 
     text-align: center;
@@ -22,7 +29,7 @@ const BoxLike = styled.div`
   .containerComment{
     width: '100%';
     background-color: #002f;
-    padding:10px 0;
+    padding:5px 0;
     border-radius: 20px;
 
     text-align: center;
@@ -32,7 +39,7 @@ const BoxLike = styled.div`
   .containerShare{
     width: '100%';
     background-color: #002f;
-    padding:10px 0;
+    padding:5px 0;
     border-radius: 20px;
 
     text-align: center;
